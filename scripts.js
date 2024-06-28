@@ -1,5 +1,5 @@
 //Computer player to randomly select rock paper or scissors
-function getComputerChoice(){
+function getComputerChoice() {
     //Randomly generate a number 
    let randomNum = Math.random()
 
@@ -24,77 +24,100 @@ function getComputerChoice(){
 }
 
 //Human player to input rock, paper or scissors
-function getHumanChoice() {
-    let humanChoice = Number(prompt("Enter the corresponding number to play; 1 = rock, 2 = paper, 3 = scissors"));
+// function getHumanChoice() {
+//     let humanChoice = Number(prompt("Enter the corresponding number to play; 1 = rock, 2 = paper, 3 = scissors"));
 
-    switch (humanChoice){
-        case 1:
-            return "rock";
-        case 2:
-            return "paper";
-        case 3:
-            return "scissors";
-        default:
-            return "Please enter only numbers 1, 2 or 3 to represent rock, paper or scissors respectively"
-    }
-    return humanChoice;
-}
+//     switch (humanChoice){
+//         case 1:
+//             return "rock";
+//         case 2:
+//             return "paper";
+//         case 3:
+//             return "scissors";
+//         default:
+//             return "Please enter only numbers 1, 2 or 3 to represent rock, paper or scissors respectively"
+//     }
+//     return humanChoice;
+// }
 
 //Play round, compare computer and human player's inputs to see who wins 
-function playRound (){
+function playRound (playerSelect){
 
-    //Get players' inputs
-    let humanChoice = getHumanChoice();
+    //Get computer's input
     let computerChoice = getComputerChoice();
+    let humanChoice = playerSelect;
 
     //match outcome is decided, scores are updated
     if (humanChoice === computerChoice ) {
-        console.log("It's a draw!");
+        results.textContent = "It's a draw! Your score is " + humanScore + ". Computer's score is " + computerScore + ".";
     }
     else if (humanChoice === "rock" && computerChoice==="scissors") {
         humanScore += 1;
-        console.log("You win! Rock beats scissors.")
-        console.log("Your score is " + humanScore + ". Computer's score is " + computerScore + ".")
+        results.textContent = "You win! Rock beats scissors. Your score is " + humanScore + ". Computer's score is " + computerScore + "."
     }
     else if (humanChoice === "rock" && computerChoice==="paper") {
         computerScore += 1;
-        console.log("You lose! Paper beats rock.")
-        console.log("Your score is " + humanScore + ". Computer's score is " + computerScore + ".")
+        results.textContent = "You lose! Paper beats rock. Your score is " + humanScore + ". Computer's score is " + computerScore + "."
     }
     else if (humanChoice === "paper" && computerChoice==="scissors") {
         computerScore += 1;
-        console.log("You lose! Scissors beat paper.")
-        console.log("Your score is " + humanScore + ". Computer's score is " + computerScore + ".")
+        results.textContent = "You lose! Scissors beat paper. Your score is " + humanScore + ". Computer's score is " + computerScore + "."
     }
     else if (humanChoice === "paper" && computerChoice==="rock") {
         humanScore += 1;
-        console.log("You win! Paper beats rock.")
-        console.log("Your score is " + humanScore + ". Computer's score is " + computerScore + ".")
+        results.textContent = "You win! Paper beats rock. Your score is " + humanScore + ". Computer's score is " + computerScore + "."
     }
     else if (humanChoice === "scissors" && computerChoice==="rock") {
         computerScore += 1;
-        console.log("You lose! Rock beats scissors.")
-        console.log("Your score is " + humanScore + ". Computer's score is " + computerScore + ".")
+        results.textContent = "You lose! Rock beats scissors. Your score is " + humanScore + ". Computer's score is " + computerScore + "."
     }
     else if (humanChoice === "scissors" && computerChoice==="paper") {
         humanScore += 1;
-        console.log("You win! Scissors beat paper.")
-        console.log("Your score is " + humanScore + ". Computer's score is " + computerScore + ".")
-    }
+        results.textContent = "You win! Scissors beat paper. Your score is " + humanScore + ". Computer's score is " + computerScore + "."
     }
 
-
-//Play a full game consisting of 5 rounds
-function playGame(){
-
-    playRound();
-    playRound();
-    playRound();
-    playRound();
-    playRound();
+    if (humanScore==5) {
+        winner.textContent = "Player wins!";
+    }
+        
+    else if (computerScore==5) {
+        winner.textContent = "Computer wins!";
+    }
+    
 }
 
  //Initialise game
  let humanScore = 0;
  let computerScore = 0;
- playGame();
+
+//Define buttons for rock, paper scissors
+const rockSelect = document.createElement("button");
+rockSelect.textContent = "rock";
+document.body.appendChild(rockSelect);
+rockSelect.addEventListener("click", ()=>{
+    playRound("rock");
+})
+
+const paperSelect = document.createElement("button");
+paperSelect.textContent = "paper";
+document.body.appendChild(paperSelect);
+paperSelect.addEventListener("click", ()=>{
+    playRound("paper");
+})
+
+const scissorsSelect = document.createElement("button");
+scissorsSelect.textContent = "scissors";
+document.body.appendChild(scissorsSelect);
+scissorsSelect.addEventListener("click", ()=>{
+    playRound("scissors");
+})
+
+//Print results
+const results = document.createElement("div");
+document.body.appendChild(results);
+
+//Check and announce winner, 1st to 5 wins
+const winner = document.createElement("div")
+document.body.appendChild(winner);
+
+
